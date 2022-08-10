@@ -325,6 +325,8 @@
 // Poses and camera info as output by the simulator
 #define TOPIC_NAV_CAM_SIM_POSE                     "sim/nav_cam/pose"
 #define TOPIC_NAV_CAM_SIM_INFO                     "sim/nav_cam/info"
+#define TOPIC_DOCK_CAM_SIM_POSE                    "sim/dock_cam/pose"
+#define TOPIC_DOCK_CAM_SIM_INFO                    "hw/cam_dock/camera_info"
 #define TOPIC_HAZ_CAM_SIM_POSE                     "sim/haz_cam/pose"
 #define TOPIC_HAZ_CAM_SIM_INFO                     "sim/haz_cam/info"
 #define TOPIC_SCI_CAM_SIM_POSE                     "sim/sci_cam/pose"
@@ -382,7 +384,7 @@
 #define TOPIC_HARDWARE_PMC_STATE                    "hw/pmc/state"
 #define TOPIC_HARDWARE_IMU                          "hw/imu"
 #define TOPIC_HARDWARE_NAV_CAM                      "hw/cam_nav"
-#define TOPIC_HARDWARE_DOCK_CAM                     "hw/cam_dock"
+#define TOPIC_HARDWARE_DOCK_CAM                     "hw/cam_dock/image_raw"
 #define TOPIC_HARDWARE_CAM_SUFFIX_BAYER_RAW         "_bayer"
 #define TOPIC_HARDWARE_CAM_SUFFIX_BAYER_COLOR       "_color"
 #define TOPIC_HARDWARE_SCI_CAM                      "hw/cam_sci"
