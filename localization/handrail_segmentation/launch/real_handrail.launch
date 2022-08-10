@@ -1,0 +1,19 @@
+<launch>
+  <node pkg="rosbag" type="play" name="player" output="screen" args="--loop --clock --quiet /home/anaveen/Documents/nasa_ws/data/hard3.bag">
+    <param name="/use_sim_time" value="true" />
+  </node>
+  <!-- <node pkg= "handrail_segmentation" type="astrobee_tf_broadcaster.py" name="astrobee_tf_broadcaster_node" output= "screen">
+    <param name="/use_sim_time" value="true" />
+  </node> -->
+  <node pkg= "handrail_segmentation" type="handrail_detector.py" name="handrail_detector_node" output= "screen">
+      <param name="image_topic" value="/hw/cam_dock_color" />
+      <param name="/use_sim_time" value="true" />
+  </node>
+  <node pkg= "handrail_segmentation" type="pointcloud_mask.py" name="pointcloud_mask_processor_node" output= "screen">
+      <param name="rgb_image_topic"  value="/hw/cam_dock_color" />
+      <param name="/use_sim_time" value="true" />
+  </node>
+  <node pkg= "handrail_segmentation" type="icp_pose_estimator.py" name="icp_pose_estimator_node" output= "screen">
+    <param name="/use_sim_time" value="true" />
+  </node>
+</launch>
