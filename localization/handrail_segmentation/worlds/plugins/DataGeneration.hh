@@ -58,7 +58,7 @@ namespace data_generation
 
     private: std::vector<ignition::math::Pose3d> handrailInspectPositions;
 
-    private: int NUM_IMAGES_EACH = 175;
+    private: int NUM_IMAGES_EACH = 250;
 
     private: int n_count = 0;
 

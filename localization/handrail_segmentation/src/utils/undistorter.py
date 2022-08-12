@@ -26,6 +26,8 @@ class Undistorter:
 
             # self.K = self.K / (camera_dims/dims)[0]
 
+
+        # FOV model -
         K_undist = self.K.copy()
         K_undist[0:2,2] = dims/2.
         #get set of x-y coordinates

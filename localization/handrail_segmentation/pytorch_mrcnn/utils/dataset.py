@@ -16,7 +16,7 @@ class AstrobeeHandrailDataset(torch.utils.data.Dataset):
         # ensure that they are aligned
         self.imgs = list(sorted(os.listdir(os.path.join(root, "images"))))
         self.masks = list(sorted(os.listdir(os.path.join(root, "colored_maps"))))
-        self.label_dict = {39: 1, 137: 2, 102: 3, 85: 4, 255: 1}
+        self.label_dict = {39: 1, 137: 2, 102: 3, 85: 4, 255: 1, 101: 1}
 
     def __getitem__(self, idx):
         # load images and masks

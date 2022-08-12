@@ -70,30 +70,30 @@ void DataGeneration::Configure(const ignition::gazebo::Entity &_entity,
     this->entity = _entity;
     this->entityCreator = ignition::gazebo::SdfEntityCreator(_ecm, _eventMgr);
 
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(4.01, 0.5, 4.6, 0, 1.57, 0)); // <model name="handrail 8.5 (1)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(4.01, -0.5, 9.6, 0, 1.57, 0)); // <model name="handrail 21.5 (1)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 15.0, 0, 1.57, 0)); // <model name="handrail 41.5 (1)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0.5, 19.6, 0, 1.57, 0)); //<model name="handrail 30 (1)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0.5, 24.8, 0, 1.57, 0)); // <model name="handrail 8.5 (2)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0.4, 29.6, 0, 1.57, 0)); // <model name="handrail 8.5 (3)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, -0.4, 34.6, 0, 1.57, 0)); // <model name="handrail 8.5 (4)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.3, -0.5, 40.0, 0, 1.57, 0)); // <model name="handrail 41.5 (2)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.3, 0, 45.0, 0, 1.57, 0)); // <model name="handrail 41.5 (3)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0, 50, 0, 0, -1.57)); // <model name="handrail 41.5 (4)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0, 55.6, 0, 0, -1.57)); // <model name="handrail 21.5 (2)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0, 59.6, 0, 0, -1.57)); // <model name="handrail 8.5 (5)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 64.6, 0, 0, -1.57)); // <model name="handrail 30 (2)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 70.65, 0, 0, -1.57)); // <model name="handrail 21.5 (3)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 74.6, 0, 0, -1.57)); // <model name="handrail 30 (3)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 80.5, 0, 0, -1.57)); // <model name="handrail 8.5 (6)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 85.8, 0, 0, -1.57)); // <model name="handrail 8.5 (7)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0, 90, 0, 0, 1.57)); // <model name="handrail 30 (4)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.87, 0, 95.5, 0, 0, 1.57)); // <model name="handrail 30 (5)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 100.4, 0, 0, 1.57)); // <model name="handrail 30 (6)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 104.5, 0, 0, 1.57)); // <model name="handrail 21.5 (4)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 109.8, 0, 0, 1.57)); // <model name="handrail 21.5 (5)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 115.6, 0, 0, 1.57)); // <model name="handrail 21.5 (6)">
-     this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.87, 0, 119.43, 0, 0, 1.57)); // <model name="handrail 21.5 (7)">
+     this->handrailInspectPositions.push_back(ignition::math::Pose3d(4.01, 0.5, 4.75, 0, 1.57, 0)); // <model name="handrail 8.5 (1)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(4.01, -0.5, 9.6, 0, 1.57, 0)); // <model name="handrail 21.5 (1)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 15.0, 0, 1.57, 0)); // <model name="handrail 41.5 (1)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0.5, 19.6, 0, 1.57, 0)); //<model name="handrail 30 (1)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0.5, 24.8, 0, 1.57, 0)); // <model name="handrail 8.5 (2)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0.4, 29.6, 0, 1.57, 0)); // <model name="handrail 8.5 (3)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, -0.4, 34.6, 0, 1.57, 0)); // <model name="handrail 8.5 (4)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.3, -0.5, 40.0, 0, 1.57, 0)); // <model name="handrail 41.5 (2)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.3, 0, 45.0, 0, 1.57, 0)); // <model name="handrail 41.5 (3)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0, 50, 0, 0, -1.57)); // <model name="handrail 41.5 (4)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0, 55.6, 0, 0, -1.57)); // <model name="handrail 21.5 (2)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0, 59.6, 0, 0, -1.57)); // <model name="handrail 8.5 (5)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 64.6, 0, 0, -1.57)); // <model name="handrail 30 (2)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 70.65, 0, 0, -1.57)); // <model name="handrail 21.5 (3)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 74.6, 0, 0, -1.57)); // <model name="handrail 30 (3)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 80.5, 0, 0, -1.57)); // <model name="handrail 8.5 (6)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 85.8, 0, 0, -1.57)); // <model name="handrail 8.5 (7)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0, 90, 0, 0, 1.57)); // <model name="handrail 30 (4)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.87, 0, 95.5, 0, 0, 1.57)); // <model name="handrail 30 (5)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 100.4, 0, 0, 1.57)); // <model name="handrail 30 (6)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 104.5, 0, 0, 1.57)); // <model name="handrail 21.5 (4)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 109.8, 0, 0, 1.57)); // <model name="handrail 21.5 (5)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 115.6, 0, 0, 1.57)); // <model name="handrail 21.5 (6)">
+     // this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.87, 0, 119.43, 0, 0, 1.57)); // <model name="handrail 21.5 (7)">
 }
 
 //////////////////////////////////////////////////
