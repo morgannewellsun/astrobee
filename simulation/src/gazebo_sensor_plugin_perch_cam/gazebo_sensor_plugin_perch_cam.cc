@@ -152,11 +152,11 @@ class GazeboSensorPluginPerchCam : public FreeFlyerSensorPlugin {
     point_cloud_msg_.data.resize(point_cloud_msg_.row_step
       * point_cloud_msg_.height);
 
-    /* 
+    /*
      * J.L Proposed change: The simulated camera is "perfect", and
-     * carries no noise on depth whatsoever. Usually, one would add 
-     * the noise when creating the camera model. Gazebo currently does 
-     * not permit to add noise to modeled depth sensors. Hence, we 
+     * carries no noise on depth whatsoever. Usually, one would add
+     * the noise when creating the camera model. Gazebo currently does
+     * not permit to add noise to modeled depth sensors. Hence, we
      * propose here to add a gaussian noise to the data acquired.
      */
     float noisy_data[static_cast<int>(point_cloud_msg_.row_step)
@@ -168,7 +168,7 @@ class GazeboSensorPluginPerchCam : public FreeFlyerSensorPlugin {
       for (int i = 0; i<static_cast<int>(height); i++) {
         for (int j = 0; j<static_cast<int>(point_cloud_msg_.row_step); j++) {
           noisy_data[i * static_cast<int>(point_cloud_msg_.row_step) + j] =
-          data[i * static_cast<int>(point_cloud_msg_.row_step) + j]
+          data[i * static_cast<int>(point_cloud_msg_.row_step) + j];
           + distribution(generator);
         }
       }

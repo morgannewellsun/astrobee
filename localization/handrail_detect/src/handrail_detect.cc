@@ -102,7 +102,7 @@ class HandrailDetect : public ff_util::FreeFlyerNodelet {
     // we shouldn't have a subscriber active which we are not using, as we will needlessly
     // sample the camera, which costs ~10% of our CPU resources. So, we're going to create
     // an enable/disable service to do this for us.
-    enable_srv_ = nh->advertiseService(SERVICE_LOCALIZATION_HR_ENABLE, &HandrailDetect::EnableCallback, this);
+    enable_srv_ = nh->advertiseService("/handrail_enable_old", &HandrailDetect::EnableCallback, this);
 
     // Publish registration
     registration_pub_ = nh->advertise<ff_msgs::CameraRegistration>(TOPIC_LOCALIZATION_HR_REGISTRATION, 1);
@@ -271,10 +271,11 @@ class HandrailDetect : public ff_util::FreeFlyerNodelet {
   }
 
   // Enable or disable handrail detection
+  // (std::string) TOPIC_HARDWARE_PICOFLEXX_PREFIX + (std::string) TOPIC_HARDWARE_NAME_PERCH_CAM + (std::string)
+  // TOPIC_HARDWARE_PICOFLEXX_SUFFIX
   bool EnableCallback(ff_msgs::SetBool::Request  &req, ff_msgs::SetBool::Response &res) {
     if (req.enable) {
-      depth_sub_ = nh_->subscribe<sensor_msgs::PointCloud2>((std::string) TOPIC_HARDWARE_PICOFLEXX_PREFIX
-        + (std::string) TOPIC_HARDWARE_NAME_PERCH_CAM + (std::string) TOPIC_HARDWARE_PICOFLEXX_SUFFIX, 1,
+      depth_sub_ = nh_->subscribe<sensor_msgs::PointCloud2>("/hw/depth_perch/points", 1,
            &HandrailDetect::PointCloud2Callback, this);
     } else {
       depth_sub_.shutdown();

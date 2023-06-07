@@ -98,3 +98,7 @@ tags
 .ctags
 
 .vscode
+
+# pytorch weights
+*.pth
+*.zip

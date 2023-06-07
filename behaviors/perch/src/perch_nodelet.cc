@@ -846,9 +846,9 @@ class PerchNodelet : public ff_util::FreeFlyerNodelet {
       try {
         // Look up the world -> body transform
         if (type == RECOVERY_POSE || type == UNPERCHED_POSE) {
-        /* 
+        /*
          * If we call move with RECOVERY_POSE, no need to check a transform.
-         * We only need to ask a movement to the pose saved in the 
+         * We only need to ask a movement to the pose saved in the
          * void SaveApproachPose(void) function.
          * For the moment, apply same reasoning when unperching.
          * This is due to the fact that we may be too close to the handrail to
@@ -860,7 +860,7 @@ class PerchNodelet : public ff_util::FreeFlyerNodelet {
          * move to approach pose, swap to ML loc.
          * However, as long as the approach pose is saved correctly, this works.
          * Need to be careful with the arm state and robot orientation!
-         * 
+         *
          * TL;DR: This is good if we don't lose localization while perched,
          * otherwise relative movements are needed to securely move away.
          */

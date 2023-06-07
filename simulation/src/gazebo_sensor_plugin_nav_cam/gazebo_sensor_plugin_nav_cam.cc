@@ -63,8 +63,6 @@ class GazeboSensorPluginNavCam : public FreeFlyerSensorPlugin {
     }
 
     // Check that we have a mono camera
-    if (sensor_->Camera()->ImageFormat() != "L8")
-      ROS_FATAL_STREAM("Camera format must be L8");
 
     // Set image constants
     image_msg_.is_bigendian = false;
