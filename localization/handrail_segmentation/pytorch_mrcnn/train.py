@@ -1,3 +1,4 @@
+import sys
 import math
 
 import torch
@@ -49,8 +50,8 @@ def main():
     # our dataset has five classes only - background and handrail 8.5, handrail 21.5, handrail 30, handrail 41.5
     num_classes = 5
     # use our dataset and defined transformations
-    dataset = AstrobeeHandrailDataset("data_cargo_bag", get_transform(train=True))
-    dataset_test = AstrobeeHandrailDataset("data_cargo_bag", get_transform(train=False))
+    dataset = AstrobeeHandrailDataset("data", get_transform(train=True))
+    dataset_test = AstrobeeHandrailDataset("data", get_transform(train=False))
 
     # split the dataset in train and test set
     indices = torch.randperm(len(dataset)).tolist()
@@ -147,7 +148,7 @@ def main():
                 lr_scheduler.step()
 
         if epoch % params.checkpoint_interval == 0 or epoch == num_epochs - 1:
-            checkpoint_path = f"checkpoints/cargo_bag_{epoch}.pth"
+            checkpoint_path = f"checkpoints/handrail_{epoch}.pth"
             print(f"---- Saving checkpoint to: '{checkpoint_path}' ----")
             torch.save(model.state_dict(), checkpoint_path)
             evaluate(model, data_loader_test, device=device)

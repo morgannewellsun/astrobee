@@ -1,13 +1,13 @@
 import os
 import random
 
-import cv2
+# import cv2
 import numpy as np
 import torch
 from PIL import Image, ImageOps
 from torchvision.transforms import functional as F
 
-from .visualize import convert_mask_to_image
+# from .visualize import convert_mask_to_image
 
 
 class AstrobeeHandrailDataset(torch.utils.data.Dataset):
