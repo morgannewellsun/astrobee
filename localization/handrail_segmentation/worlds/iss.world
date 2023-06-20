@@ -247,7 +247,7 @@
             <far>20</far>
           </clip>
           <save enabled="true">
-            <path>/home/anaveen/Documents/nasa_ws/astrobee-detection-pipeline/src/handrail_segmentation/pytorch_mrcnn/data</path>
+            <path>/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/pytorch_mrcnn/data</path>
           </save>
         </camera>
         <always_on>1</always_on>
@@ -255,7 +255,7 @@
         <visualize>true</visualize>
       </sensor>
       </link>
-      <plugin name="data_generation::DataGeneration" filename="/home/anaveen/Documents/nasa_ws/astrobee-detection-pipeline/src/handrail_segmentation/worlds/plugins/build/libDataGeneration.so"/>
+      <plugin name="data_generation::DataGeneration" filename="/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/libDataGeneration.so"/>
     </model>
 
     <model name="JEM">
