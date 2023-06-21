@@ -43,7 +43,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins
+CMAKE_SOURCE_DIR = /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build
@@ -58,29 +58,44 @@ include CMakeFiles/DataGeneration.dir/progress.make
 include CMakeFiles/DataGeneration.dir/flags.make
 
 CMakeFiles/DataGeneration.dir/DataGeneration.cc.o: CMakeFiles/DataGeneration.dir/flags.make
-CMakeFiles/DataGeneration.dir/DataGeneration.cc.o: /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.cc
+CMakeFiles/DataGeneration.dir/DataGeneration.cc.o: ../DataGeneration.cc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/DataGeneration.dir/DataGeneration.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DataGeneration.dir/DataGeneration.cc.o -c /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.cc
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DataGeneration.dir/DataGeneration.cc.o -c /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.cc
 
 CMakeFiles/DataGeneration.dir/DataGeneration.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataGeneration.dir/DataGeneration.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.cc > CMakeFiles/DataGeneration.dir/DataGeneration.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.cc > CMakeFiles/DataGeneration.dir/DataGeneration.cc.i
 
 CMakeFiles/DataGeneration.dir/DataGeneration.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataGeneration.dir/DataGeneration.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.cc -o CMakeFiles/DataGeneration.dir/DataGeneration.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.cc -o CMakeFiles/DataGeneration.dir/DataGeneration.cc.s
+
+CMakeFiles/DataGeneration.dir/CSVReader.cc.o: CMakeFiles/DataGeneration.dir/flags.make
+CMakeFiles/DataGeneration.dir/CSVReader.cc.o: ../CSVReader.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/DataGeneration.dir/CSVReader.cc.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DataGeneration.dir/CSVReader.cc.o -c /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/CSVReader.cc
+
+CMakeFiles/DataGeneration.dir/CSVReader.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataGeneration.dir/CSVReader.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/CSVReader.cc > CMakeFiles/DataGeneration.dir/CSVReader.cc.i
+
+CMakeFiles/DataGeneration.dir/CSVReader.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataGeneration.dir/CSVReader.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/CSVReader.cc -o CMakeFiles/DataGeneration.dir/CSVReader.cc.s
 
 # Object files for target DataGeneration
 DataGeneration_OBJECTS = \
-"CMakeFiles/DataGeneration.dir/DataGeneration.cc.o"
+"CMakeFiles/DataGeneration.dir/DataGeneration.cc.o" \
+"CMakeFiles/DataGeneration.dir/CSVReader.cc.o"
 
 # External object files for target DataGeneration
 DataGeneration_EXTERNAL_OBJECTS =
 
 libDataGeneration.so: CMakeFiles/DataGeneration.dir/DataGeneration.cc.o
+libDataGeneration.so: CMakeFiles/DataGeneration.dir/CSVReader.cc.o
 libDataGeneration.so: CMakeFiles/DataGeneration.dir/build.make
 libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libignition-gazebo6.so.6.14.0
-libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libignition-fuel_tools7.so.7.2.2
+libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libignition-fuel_tools7.so.7.3.0
 libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libignition-gui6.so.6.8.0
 libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libignition-common4-profiler.so.4.7.0
 libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libignition-common4-events.so.4.7.0
@@ -119,7 +134,7 @@ libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libignition-math6.so.6.14.0
 libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libignition-utils1.so.1.5.1
 libDataGeneration.so: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 libDataGeneration.so: CMakeFiles/DataGeneration.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libDataGeneration.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libDataGeneration.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DataGeneration.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -132,6 +147,6 @@ CMakeFiles/DataGeneration.dir/clean:
 .PHONY : CMakeFiles/DataGeneration.dir/clean
 
 CMakeFiles/DataGeneration.dir/depend:
-	cd /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/CMakeFiles/DataGeneration.dir/DependInfo.cmake --color=$(COLOR)
+	cd /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/CMakeFiles/DataGeneration.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/DataGeneration.dir/depend
 

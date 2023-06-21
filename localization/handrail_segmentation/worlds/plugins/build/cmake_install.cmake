@@ -1,8 +1,8 @@
-# Install script for directory: /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins
+# Install script for directory: /usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/install")
+  set(CMAKE_INSTALL_PREFIX "/usr/local")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

@@ -21,6 +21,7 @@
 #include <ignition/gazebo/System.hh>
 #include <thread>
 #include <vector>
+#include <string>
 #include <ignition/gazebo/SdfEntityCreator.hh>
 
 namespace data_generation
@@ -58,9 +59,12 @@ namespace data_generation
 
     private: std::vector<ignition::math::Pose3d> handrailInspectPositions;
 
-    private: int NUM_IMAGES_EACH = 250;
+    private: int NUM_IMAGES_EACH = 25;
 
     private: int n_count = 0;
+
+    private: std::string filepathInspectionPoses = "/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/inspectionPoses.csv";
+    private: std::string filepathGroundTruth = "/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/pytorch_mrcnn/data/groundTruthPoses.csv";
 
 
 

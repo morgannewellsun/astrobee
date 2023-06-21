@@ -26,9 +26,6 @@ AVFORMAT_LIBRARY_avformat:FILEPATH=/usr/lib/x86_64-linux-gnu/libavformat.so
 //Path to a library.
 AVUTIL_LIBRARY_avutil:FILEPATH=/usr/lib/x86_64-linux-gnu/libavutil.so
 
-//No help, variable specified on the command line.
-CATKIN_DEVEL_PREFIX:UNINITIALIZED=/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/devel
-
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -116,7 +113,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=OFF
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/install
+CMAKE_INSTALL_PREFIX:PATH=/usr/local
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=/usr/bin/ld
@@ -249,7 +246,7 @@ DataGeneration_BINARY_DIR:STATIC=/usr/local/home/mnsun/ros_ws/astrobee/src/local
 DataGeneration_LIB_DEPENDS:STATIC=general;ignition-plugin1::ignition-plugin1;general;ignition-gazebo6::ignition-gazebo6;
 
 //Value Computed by CMake
-DataGeneration_SOURCE_DIR:STATIC=/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins
+DataGeneration_SOURCE_DIR:STATIC=/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins
 
 //The directory containing a CMake configuration file for Eigen3.
 Eigen3_DIR:PATH=/usr/lib/cmake/eigen3
@@ -771,7 +768,7 @@ CMAKE_HAVE_PTHREAD_CREATE:INTERNAL=1
 CMAKE_HAVE_PTHREAD_H:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
-CMAKE_HOME_DIRECTORY:INTERNAL=/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins
+CMAKE_HOME_DIRECTORY:INTERNAL=/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins
 //Install .so files without execute permission.
 CMAKE_INSTALL_SO_NO_EXE:INTERNAL=1
 //ADVANCED property for variable: CMAKE_LINKER
