@@ -168,7 +168,7 @@ class GazeboSensorPluginPerchCam : public FreeFlyerSensorPlugin {
       for (int i = 0; i<static_cast<int>(height); i++) {
         for (int j = 0; j<static_cast<int>(point_cloud_msg_.row_step); j++) {
           noisy_data[i * static_cast<int>(point_cloud_msg_.row_step) + j] =
-          data[i * static_cast<int>(point_cloud_msg_.row_step) + j];
+          data[i * static_cast<int>(point_cloud_msg_.row_step) + j]
           + distribution(generator);
         }
       }
