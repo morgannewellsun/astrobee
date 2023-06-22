@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/CSVReader.cc
-CSVReader.hh
-/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/CSVReader.hh
-
 /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/CSVReader.hh
 fstream
 -

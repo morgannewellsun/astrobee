@@ -61,15 +61,28 @@ void DataGeneration::Configure(const ignition::gazebo::Entity& _entity, const st
   this->entity = _entity;
   this->entityCreator = ignition::gazebo::SdfEntityCreator(_ecm, _eventMgr);
 
-  // Read and load inspection poses from CSV
+  // Read and load inspection names and poses from CSV
   CSVReader reader;
-  vector<string> columnLabels = {"pose_inspection_0", "pose_inspection_1", "pose_inspection_2",
-                                 "pose_inspection_3", "pose_inspection_4", "pose_inspection_5"};
-  vector<vector<string>> inspectionPoses = reader.readCSV(this->filepathInspectionPoses, columnLabels);
-  for (auto& pose : inspectionPoses) {
-    this->handrailInspectPositions.push_back(ignition::math::Pose3d(std::stof(pose[0]), std::stof(pose[1]),
-                                                                    std::stof(pose[2]), std::stof(pose[3]),
-                                                                    std::stof(pose[4]), std::stof(pose[5])));
+  vector<vector<string>> inspectionNameAndPoses = reader.readCSV(this->inspectionPosesFilepath, this->inspectionPosesColumnLabels);
+  for (auto& nameAndPose : inspectionNameAndPoses) {
+    this->handrailNames.push_back(nameAndPose[0]);
+  }
+  for (auto& nameAndPose : inspectionNameAndPoses) {
+    this->handrailInspectPositions.push_back(ignition::math::Pose3d(
+      std::stof(nameAndPose[1]), std::stof(nameAndPose[2]), std::stof(nameAndPose[3]), 
+      std::stof(nameAndPose[4]), std::stof(nameAndPose[5]), std::stof(nameAndPose[6])));
+  }
+
+  // Initialize ground truth output file with column label header if it doesn't already exist
+  std::ofstream file;
+  file.open(this->groundTruthFilepath, std::ios_base::in);
+  if (!file) {
+    file.open(this->groundTruthFilepath, std::ios_base::out);
+    file << this->groundTruthColumnLabels[0] << "," 
+         << this->groundTruthColumnLabels[1] << "," << this->groundTruthColumnLabels[2] << "," 
+         << this->groundTruthColumnLabels[3] << "," << this->groundTruthColumnLabels[4] << "," 
+         << this->groundTruthColumnLabels[5] << "," << this->groundTruthColumnLabels[6] << std::endl;
+    file.close();
   }
 }
 
@@ -81,13 +94,14 @@ void DataGeneration::PreUpdate(const ignition::gazebo::UpdateInfo& _info,
   if (sec > this->lastPositionChange && this->n_count < handrailInspectPositions.size() * this->NUM_IMAGES_EACH) {
     auto poseComp = _ecm.Component<ignition::gazebo::components::Pose>(this->entity);
 
-    int handrailId = static_cast<int>(this->n_count / NUM_IMAGES_EACH);
-    auto inspectionPoseWithError = generateError(this->handrailInspectPositions[handrailId]);
+    int handrailIdx = static_cast<int>(this->n_count / NUM_IMAGES_EACH);
+    auto inspectionPoseWithError = generateError(this->handrailInspectPositions[handrailIdx]);
     *poseComp = inspectionPoseWithError;
 
     // Append ground truth pose to file
-    std::ofstream file(this->filepathGroundTruth, std::ios_base::app);
-    file << inspectionPoseWithError.Data().Pos().X() << "," << inspectionPoseWithError.Data().Pos().Y() << ","
+    std::ofstream file(this->groundTruthFilepath, std::ios_base::app);
+    file << this->handrailNames[handrailIdx] << ","
+         << inspectionPoseWithError.Data().Pos().X() << "," << inspectionPoseWithError.Data().Pos().Y() << ","
          << inspectionPoseWithError.Data().Pos().Z() << "," << inspectionPoseWithError.Data().Rot().Euler().X() << ","
          << inspectionPoseWithError.Data().Rot().Euler().Y() << "," << inspectionPoseWithError.Data().Rot().Euler().Z()
          << std::endl;
@@ -97,8 +111,8 @@ void DataGeneration::PreUpdate(const ignition::gazebo::UpdateInfo& _info,
                     ignition::gazebo::ComponentState::OneTimeChange);
     this->lastPositionChange = sec;
     this->n_count += 1;
-    if (static_cast<int>(this->n_count / NUM_IMAGES_EACH) > handrailId) {
-      std::cout << "Handrail number " << handrailId << " is completed. \n";
+    if (static_cast<int>(this->n_count / NUM_IMAGES_EACH) > handrailIdx) {
+      std::cout << "Handrail number " << handrailIdx << " is completed. \n";
     }
   }
 

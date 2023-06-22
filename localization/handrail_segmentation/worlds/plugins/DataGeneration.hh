@@ -58,16 +58,23 @@ namespace data_generation
     private: int lastPositionChange{0};
 
     private: std::vector<ignition::math::Pose3d> handrailInspectPositions;
+    private: std::vector<std::string> handrailNames;
 
-    private: int NUM_IMAGES_EACH = 25;
+    private: int NUM_IMAGES_EACH = 250;
 
     private: int n_count = 0;
 
-    private: std::string filepathInspectionPoses = "/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/inspectionPoses.csv";
-    private: std::string filepathGroundTruth = "/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/pytorch_mrcnn/data/groundTruthPoses.csv";
+    private: std::string inspectionPosesFilepath = "/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/inspectionPoses.csv";
+    private: std::vector<std::string> inspectionPosesColumnLabels = {
+      "name",
+      "pose_inspection_pos_x", "pose_inspection_pos_y", "pose_inspection_pos_z", 
+      "pose_inspection_euler_x", "pose_inspection_euler_y", "pose_inspection_euler_z"};
 
-
-
+    private: std::string groundTruthFilepath = "/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/pytorch_mrcnn/data/groundTruthPoses.csv";
+    private: std::vector<std::string> groundTruthColumnLabels = {
+      "name",
+      "pose_inspection_pos_x", "pose_inspection_pos_y", "pose_inspection_pos_z", 
+      "pose_inspection_euler_x", "pose_inspection_euler_y", "pose_inspection_euler_z"};
 
   };
 }

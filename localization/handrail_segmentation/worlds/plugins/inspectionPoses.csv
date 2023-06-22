@@ -1,4 +1,4 @@
-name,pose_handrail_0,pose_handrail_1,pose_handrail_2,pose_handrail_3,pose_handrail_4,pose_handrail_5,pose_inspection_0,pose_inspection_1,pose_inspection_2,pose_inspection_3,pose_inspection_4,pose_inspection_5,label
+name,pose_handrail_pos_x,pose_handrail_pos_y,pose_handrail_pos_z,pose_handrail_euler_x,pose_handrail_euler_y,pose_handrail_euler_z,pose_inspection_pos_x,pose_inspection_pos_y,pose_inspection_pos_z,pose_inspection_euler_x,pose_inspection_euler_y,pose_inspection_euler_z,label
 handrail 8.5 (1),4.01,0.5,3.95,1.57,-1.57,0,4.01,0.5,4.75,0,1.57,0,100
 handrail 21.5 (1),4.01,-0.5,8.95,1.57,-1.57,0,4.01,-0.5,9.6,0,1.57,0,120
 handrail 41.5 (1),5.02,0,13.95,1.57,-1.57,0,5.02,0,15,0,1.57,0,180
