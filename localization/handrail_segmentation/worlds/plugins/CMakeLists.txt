@@ -12,7 +12,10 @@ find_package(ignition-gazebo6 REQUIRED)
 find_package(ignition-sensors6 REQUIRED)
 
 
-add_library(DataGeneration SHARED DataGeneration.cc)
+add_library(DataGeneration SHARED 
+	DataGeneration.cc
+	CSVReader.cc
+)
 set_property(TARGET DataGeneration PROPERTY CXX_STANDARD 17)
 target_link_libraries(DataGeneration
   PRIVATE ignition-plugin${IGN_PLUGIN_VER}::ignition-plugin${IGN_PLUGIN_VER}

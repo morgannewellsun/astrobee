@@ -20,7 +20,10 @@
 #include <ignition/gazebo/components/Pose.hh>
 #include <ignition/plugin/Register.hh>
 #include <iostream>
+#include <fstream>
 #include <random>
+
+#include "CSVReader.hh"
 
 IGNITION_ADD_PLUGIN(
     data_generation::DataGeneration,
@@ -58,57 +61,58 @@ void DataGeneration::Configure(const ignition::gazebo::Entity& _entity, const st
   this->entity = _entity;
   this->entityCreator = ignition::gazebo::SdfEntityCreator(_ecm, _eventMgr);
 
-  this->handrailInspectPositions.push_back(
-    ignition::math::Pose3d(4.01, 0.5, 4.75, 0, 1.57, 0));  // <model name="handrail 8.5 (1)">
-  // this->handrailInspectPositions.push_back(ignition::math::Pose3d(4.01, -0.5, 9.6, 0, 1.57, 0)); // <model
-  // name="handrail 21.5 (1)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 15.0, 0, 1.57,
-  // 0)); // <model name="handrail 41.5 (1)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09,
-  // 0.5, 19.6, 0, 1.57, 0)); //<model name="handrail 30 (1)">
-  // this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0.5, 24.8, 0, 1.57, 0)); // <model
-  // name="handrail 8.5 (2)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0.4, 29.6, 0, 1.57,
-  // 0)); // <model name="handrail 8.5 (3)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94,
-  // -0.4, 34.6, 0, 1.57, 0)); // <model name="handrail 8.5 (4)">
-  // this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.3, -0.5, 40.0, 0, 1.57, 0)); // <model
-  // name="handrail 41.5 (2)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.3, 0, 45.0, 0, 1.57,
-  // 0)); // <model name="handrail 41.5 (3)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0,
-  // 50, 0, 0, -1.57)); // <model name="handrail 41.5 (4)">
-  // this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0, 55.6, 0, 0, -1.57)); // <model
-  // name="handrail 21.5 (2)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(6.09, 0, 59.6, 0, 0,
-  // -1.57)); // <model name="handrail 8.5 (5)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02,
-  // 0, 64.6, 0, 0, -1.57)); // <model name="handrail 30 (2)">
-  // this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 70.65, 0, 0, -1.57)); // <model
-  // name="handrail 21.5 (3)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 74.6, 0, 0,
-  // -1.57)); // <model name="handrail 30 (3)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16,
-  // 0, 80.5, 0, 0, -1.57)); // <model name="handrail 8.5 (6)">
-  // this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 85.8, 0, 0, -1.57)); // <model
-  // name="handrail 8.5 (7)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(2.94, 0, 90, 0, 0, 1.57));
-  // // <model name="handrail 30 (4)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.87, 0, 95.5, 0,
-  // 0, 1.57)); // <model name="handrail 30 (5)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16,
-  // 0, 100.4, 0, 0, 1.57)); // <model name="handrail 30 (6)">
-  // this->handrailInspectPositions.push_back(ignition::math::Pose3d(7.16, 0, 104.5, 0, 0, 1.57)); // <model
-  // name="handrail 21.5 (4)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 109.8, 0,
-  // 0, 1.57)); // <model name="handrail 21.5 (5)">
-  // this->handrailInspectPositions.push_back(ignition::math::Pose3d(5.02, 0, 115.6, 0, 0, 1.57)); // <model
-  // name="handrail 21.5 (6)"> this->handrailInspectPositions.push_back(ignition::math::Pose3d(1.87, 0, 119.43, 0,
-  // 0, 1.57)); // <model name="handrail 21.5 (7)">
+  // Read and load inspection names and poses from CSV
+  CSVReader reader;
+  vector<vector<string>> inspectionNameAndPoses = reader.readCSV(this->inspectionPosesFilepath, this->inspectionPosesColumnLabels);
+  for (auto& nameAndPose : inspectionNameAndPoses) {
+    this->handrailNames.push_back(nameAndPose[0]);
+  }
+  for (auto& nameAndPose : inspectionNameAndPoses) {
+    this->handrailInspectPositions.push_back(ignition::math::Pose3d(
+      std::stof(nameAndPose[1]), std::stof(nameAndPose[2]), std::stof(nameAndPose[3]), 
+      std::stof(nameAndPose[4]), std::stof(nameAndPose[5]), std::stof(nameAndPose[6])));
+  }
+
+  // Initialize ground truth output file with column label header if it doesn't already exist
+  std::ofstream file;
+  file.open(this->groundTruthFilepath, std::ios_base::in);
+  if (!file) {
+    file.open(this->groundTruthFilepath, std::ios_base::out);
+    file << this->groundTruthColumnLabels[0] << "," 
+         << this->groundTruthColumnLabels[1] << "," << this->groundTruthColumnLabels[2] << "," 
+         << this->groundTruthColumnLabels[3] << "," << this->groundTruthColumnLabels[4] << "," 
+         << this->groundTruthColumnLabels[5] << "," << this->groundTruthColumnLabels[6] << std::endl;
+    file.close();
+  }
 }
 
 //////////////////////////////////////////////////
 void DataGeneration::PreUpdate(const ignition::gazebo::UpdateInfo& _info,
                                ignition::gazebo::EntityComponentManager& _ecm) {
   auto sec = std::chrono::duration_cast<std::chrono::seconds>(_info.simTime).count();
+
   if (sec > this->lastPositionChange && this->n_count < handrailInspectPositions.size() * this->NUM_IMAGES_EACH) {
     auto poseComp = _ecm.Component<ignition::gazebo::components::Pose>(this->entity);
 
-    int handrailId = static_cast<int>(this->n_count / NUM_IMAGES_EACH);
-    *poseComp = generateError(this->handrailInspectPositions[handrailId]);
+    int handrailIdx = static_cast<int>(this->n_count / NUM_IMAGES_EACH);
+    auto inspectionPoseWithError = generateError(this->handrailInspectPositions[handrailIdx]);
+    *poseComp = inspectionPoseWithError;
+
+    // Append ground truth pose to file
+    std::ofstream file(this->groundTruthFilepath, std::ios_base::app);
+    file << this->handrailNames[handrailIdx] << ","
+         << inspectionPoseWithError.Data().Pos().X() << "," << inspectionPoseWithError.Data().Pos().Y() << ","
+         << inspectionPoseWithError.Data().Pos().Z() << "," << inspectionPoseWithError.Data().Rot().Euler().X() << ","
+         << inspectionPoseWithError.Data().Rot().Euler().Y() << "," << inspectionPoseWithError.Data().Rot().Euler().Z()
+         << std::endl;
+    file.close();
 
     _ecm.SetChanged(this->entity, ignition::gazebo::components::Pose::typeId,
                     ignition::gazebo::ComponentState::OneTimeChange);
     this->lastPositionChange = sec;
     this->n_count += 1;
-    if (static_cast<int>(this->n_count / NUM_IMAGES_EACH) > handrailId) {
-      std::cout << "Handrail number " << handrailId << " is completed. \n";
+    if (static_cast<int>(this->n_count / NUM_IMAGES_EACH) > handrailIdx) {
+      std::cout << "Handrail number " << handrailIdx << " is completed. \n";
     }
   }
 

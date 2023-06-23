@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/CSVReader.hh
+fstream
+-
+sstream
+-
+vector
+-
+algorithm
+-
+stdexcept
+-
+
 /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.cc
 DataGeneration.hh
 /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.hh
@@ -15,8 +27,12 @@ ignition/plugin/Register.hh
 -
 iostream
 -
+fstream
+-
 random
 -
+CSVReader.hh
+/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/CSVReader.hh
 
 /home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/DataGeneration.hh
 chrono
@@ -26,6 +42,8 @@ ignition/gazebo/System.hh
 thread
 -
 vector
+-
+string
 -
 ignition/gazebo/SdfEntityCreator.hh
 -

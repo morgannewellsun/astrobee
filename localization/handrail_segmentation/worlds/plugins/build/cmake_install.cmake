@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/install")
+  set(CMAKE_INSTALL_PREFIX "/usr/local")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

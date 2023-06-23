@@ -1,2 +1,0 @@
-
--DCATKIN_DEVEL_PREFIX=/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/devel -DCMAKE_INSTALL_PREFIX=/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/install -G Unix Makefiles

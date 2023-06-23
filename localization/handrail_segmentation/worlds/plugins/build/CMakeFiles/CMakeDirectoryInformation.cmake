@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/worlds/plugins/build")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)
