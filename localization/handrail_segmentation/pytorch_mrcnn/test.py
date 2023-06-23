@@ -1,5 +1,6 @@
 import argparse
 import os
+from typing import Optional
 
 import cv2
 import numpy as np
@@ -16,7 +17,7 @@ convert_tensor = transforms.ToTensor()
 
 
 def post_process(detections, num_detections, c_thresh=0.75):
-    print(detections)
+    # print(detections)
     p_detections = []
     for i in range(num_detections):
         if detections["scores"][i] > c_thresh:
@@ -49,41 +50,29 @@ def get_trained_model(weights_path, num_classes=5):
     model.roi_heads.mask_predictor = MaskRCNNPredictor(
         in_features_mask, hidden_layer, num_classes
     )
-
     model.load_state_dict(torch.load(weights_path))
 
     return model
 
 
-def evaluate():
-    parser = argparse.ArgumentParser(description="Evaluate validation data.")
-    parser.add_argument(
-        "-i",
-        "--img_directory",
-        type=str,
-        default="data_test/images/",
-        help="Path to image to evaluate on",
-    )
-    parser.add_argument(
-        "-w",
-        "--weights",
-        type=str,
-        default="/home/anaveen/Documents/nasa_ws/astrobee-detection-pipeline/src/handrail_segmentation/pytorch_mrcnn/checkpoints/mrcnn_ckpt_0.pth",
-    )
-    parser.add_argument("-n", "--nms_thesh", type=float, default=0.7)
-    args = parser.parse_args()
+def main(dataset_path: str, output_path: str, weights_path: str, nms_thresh: Optional[str]):
 
-    model = get_trained_model(args.weights)
+    model = get_trained_model(weights_path)
     model.eval()
 
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
     img_paths = [
-        os.path.join(args.img_directory, img_name)
-        for img_name in list(sorted(os.listdir(args.img_directory)))
-    ]
+        os.path.join(dataset_path, img_name)
+        for img_name 
+        in list(sorted(os.listdir(dataset_path)))]
+    img_out_paths = [
+        os.path.join(output_path, img_name)
+        for img_name 
+        in list(sorted(os.listdir(dataset_path)))]
 
-    for img_path in tqdm(img_paths):
+    nms_thresh = 0.7 if nms_thresh is None else nms_thresh
+    for img_path, img_out_path in tqdm(zip(img_paths, img_out_paths)):
         img = Image.open(img_path).convert("RGB")
         img = [convert_tensor(img)]
         torch.cuda.synchronize()
@@ -97,13 +86,29 @@ def evaluate():
         for detection in detections:
             bbox, mask, label = detection.values()
 
-            np.place(mask, mask > args.nms_thesh, label)
-            np.place(mask, mask <= args.nms_thesh, 0)
+            np.place(mask, mask > nms_thresh, label)
+            np.place(mask, mask <= nms_thresh, 0)
 
             annotated_img = visualize(annotated_img, bbox, mask, label)
 
-        save_image(annotated_img, img_path)
+        cv2.imwrite(img_out_path, annotated_img)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", "--dataset_path", type=str, required=True)
+    parser.add_argument("-o", "--output_path", type=str, required=True)
+    parser.add_argument("-w", "--weights_path", type=str, default=None)
+    parser.add_argument("-t", "--nms_thresh", type=float, default=None)
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
-    evaluate()
+    args = parse_args()
+    main(
+        dataset_path=args.dataset_path,
+        output_path=args.output_path,
+        weights_path=args.weights_path,
+        nms_thresh=args.nms_thresh,
+    )
+

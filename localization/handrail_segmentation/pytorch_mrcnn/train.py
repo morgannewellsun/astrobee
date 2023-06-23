@@ -1,5 +1,8 @@
+import argparse
+from typing import Optional
 import sys
 import math
+import os
 
 import torch
 import torchvision
@@ -37,11 +40,14 @@ def get_model_instance_segmentation(num_classes):
     model.roi_heads.mask_predictor = MaskRCNNPredictor(
         in_features_mask, hidden_layer, num_classes
     )
-    # model.load_state_dict(torch.load('/home/anaveen/Documents/nasa_ws/astrobee-detection-pipeline/src/handrail_segmentation/src/weights/mrcnn_ckpt_60.pth'))
     return model
 
 
-def main():
+def main(
+        n_epochs: int, 
+        dataset_path: str, 
+        output_path: str, output_label: Optional[str] = None, 
+        init_weights_path: Optional[str] = None):
 
     params = Model_Params()
     # train on the GPU or on the CPU, if a GPU is not available
@@ -50,8 +56,8 @@ def main():
     # our dataset has five classes only - background and handrail 8.5, handrail 21.5, handrail 30, handrail 41.5
     num_classes = 5
     # use our dataset and defined transformations
-    dataset = AstrobeeHandrailDataset("data", get_transform(train=True))
-    dataset_test = AstrobeeHandrailDataset("data", get_transform(train=False))
+    dataset = AstrobeeHandrailDataset(dataset_path, get_transform(train=True))
+    dataset_test = AstrobeeHandrailDataset(dataset_path, get_transform(train=False))
 
     # split the dataset in train and test set
     indices = torch.randperm(len(dataset)).tolist()
@@ -79,6 +85,10 @@ def main():
     # get the model using our helper function
     model = get_model_instance_segmentation(num_classes)
 
+    # load weights to fine tune if applicable
+    if init_weights_path is not None:
+        model.load_state_dict(torch.load(init_weights_path))
+
     # move model to the right device
     model.to(device)
 
@@ -97,9 +107,9 @@ def main():
         gamma=params.optimizer["gamma"],
     )
 
-    # let's train it for 10 epochs
-    num_epochs = 200
-
+    # begin training
+    num_epochs = n_epochs
+    output_label = "mrcnn" if output_label is None else output_label
     for epoch in range(num_epochs):
         # # train for one epoch, printing every 10 iterations
         # train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=10)
@@ -148,7 +158,7 @@ def main():
                 lr_scheduler.step()
 
         if epoch % params.checkpoint_interval == 0 or epoch == num_epochs - 1:
-            checkpoint_path = f"checkpoints/handrail_{epoch}.pth"
+            checkpoint_path = os.path.join(output_path, f"{output_label}_ckpt_{epoch}.pth")
             print(f"---- Saving checkpoint to: '{checkpoint_path}' ----")
             torch.save(model.state_dict(), checkpoint_path)
             evaluate(model, data_loader_test, device=device)
@@ -156,5 +166,21 @@ def main():
     print("That's it!")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--n_epochs", type=int, required=True)
+    parser.add_argument("-d", "--dataset_path", type=str, required=True)
+    parser.add_argument("-o", "--output_path", type=str, required=True)
+    parser.add_argument("-l", "--output_label", type=str, default=None)
+    parser.add_argument("-w", "--init_weights_path", type=str, default=None)
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
-    main()
+    args = parse_args()
+    main(
+        n_epochs=args.n_epochs,
+        dataset_path=args.dataset_path, 
+        output_path=args.output_path,
+        output_label=args.output_label,
+        init_weights_path=args.init_weights_path)
