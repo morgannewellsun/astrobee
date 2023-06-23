@@ -9,6 +9,13 @@ from torchvision.transforms import functional as F
 
 # from .visualize import convert_mask_to_image
 
+"""
+Contents of `notes.txt` (not sure what it means but seems relevant to this class):
+[(4617, (0, 39, 143)), (1019383, (0, 0, 0))] --> 39
+[(10561, (0, 200, 172)), (1013439, (0, 0, 0))] --> 137
+[(18225, (0, 106, 200)), (1005775, (0, 0, 0))] --> 85
+[(10074, (0, 173, 2)), (1013926, (0, 0, 0))] --> 102
+"""
 
 class AstrobeeHandrailDataset(torch.utils.data.Dataset):
     def __init__(self, root, transforms):
