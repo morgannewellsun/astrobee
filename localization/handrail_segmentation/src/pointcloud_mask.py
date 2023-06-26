@@ -2,28 +2,28 @@
 
 from __future__ import division
 
-import argparse
-import os
+# import argparse
+# import os
 import struct
 
 # Python imports
-import sys
+# import sys
 
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import rospy
-import sensor_msgs
-import sensor_msgs.point_cloud2 as pc2
+# import sensor_msgs
+# import sensor_msgs.point_cloud2 as pc2
 from cv_bridge import CvBridge
-from image_geometry import PinholeCameraModel
-from PIL import Image
+# from image_geometry import PinholeCameraModel
+# from PIL import Image
 from rospkg import RosPack
-from sensor_msgs.msg import CameraInfo
+# from sensor_msgs.msg import CameraInfo
 from sensor_msgs.msg import Image as ROSImage
 from sensor_msgs.msg import PointCloud2
 from sklearn.cluster import DBSCAN
-from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
+# from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
 from tqdm import tqdm
 from utils.converter import *
 from utils.undistorter import Undistorter
@@ -68,7 +68,7 @@ class PerchCamProcess:
 
         self.bridge = CvBridge()
 
-        self.camera_model = PinholeCameraModel()
+        # self.camera_model = PinholeCameraModel()
         self.undist = Undistorter()
 
         self.pub_handrail = rospy.Publisher(

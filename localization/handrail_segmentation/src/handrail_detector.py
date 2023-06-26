@@ -95,8 +95,10 @@ class HandrailDetectorManager:
     def __init__(self):
         self.simulation = True
         # Load weights parameter
-        weights_name = rospy.get_param("~weights_name", "finetuned_ckpt_199.pth")
-        self.weights_path = os.path.join(package_path, "src/weights", weights_name)
+        # weights_name = rospy.get_param("~weights_name", "finetuned_ckpt_199.pth")
+        # self.weights_path = os.path.join(package_path, "src/weights", weights_name)
+        weights_name = "handrail_finetune_ckpt_199.pth"
+        self.weights_path = os.path.join("/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/pytorch_mrcnn/checkpoints", weights_name)
         rospy.loginfo("Found weights, loading %s", self.weights_path)
 
         # Raise error if it cannot find the model

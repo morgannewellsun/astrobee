@@ -10,15 +10,15 @@ import numpy as np
 import open3d as o3d
 import rospy
 import tf2_ros
-import utils.icp
-import utils.icp as icp
+# import utils.icp
+# import utils.icp as icp
 from geometry_msgs.msg import Pose
-from handrail_segmentation.msg import EkfState
+# from handrail_segmentation.msg import EkfState
 from probreg import cpd
-from rospkg import RosPack
+# from rospkg import RosPack
 from scipy.spatial.transform import Rotation as R
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
+# from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
 from utils.converter import *
 from utils.transformation import TransformAlignment
 
@@ -96,7 +96,7 @@ class DOFPoseEstimator:
         detected_handrail_o3d.points = o3d.utility.Vector3dVector(detected_handrail)
 
         registered_handrail_o3d = o3d.io.read_point_cloud(
-            "/home/anaveen/Documents/nasa_ws/astrobee-detection-pipeline/src/handrail_segmentation/src/reference_pointclouds/handrail_30.pcd"
+            "/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/src/reference_pointclouds/handrail_30.pcd"
         )
         registered_handrail = np.asarray(registered_handrail_o3d.points)
         self.pub_non_transform.publish(
