@@ -1,9 +1,9 @@
 import numpy as np
-import open3d
-import pcl
+# import open3d
+# import pcl
 import ros_numpy
 import rospy
-import tf2_geometry_msgs
+# import tf2_geometry_msgs
 import tf2_py as tf2
 import tf2_ros
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
@@ -49,24 +49,24 @@ class TransformAlignment:
 
         return do_transform_cloud(orig_pointcloud, trans)
 
-    def transform_pose_estimate(self, pose):
-        pose_stamped = tf2_geometry_msgs.PoseStamped()
-        pose_stamped.pose = pose
-        pose_stamped.header.frame_id = "dock_cam"
-        pose_stamped.header.stamp = rospy.Time.now()
-        try:
-            # ** It is important to wait for the listener to start listening. Hence the rospy.Duration(1)
-            output_pose_stamped = self.tf_buffer.transform(
-                pose_stamped, "world", rospy.Duration(1)
-            )
-            return output_pose_stamped.pose
+    # def transform_pose_estimate(self, pose):
+    #     pose_stamped = tf2_geometry_msgs.PoseStamped()
+    #     pose_stamped.pose = pose
+    #     pose_stamped.header.frame_id = "dock_cam"
+    #     pose_stamped.header.stamp = rospy.Time.now()
+    #     try:
+    #         # ** It is important to wait for the listener to start listening. Hence the rospy.Duration(1)
+    #         output_pose_stamped = self.tf_buffer.transform(
+    #             pose_stamped, "world", rospy.Duration(1)
+    #         )
+    #         return output_pose_stamped.pose
 
-        except (
-            tf2_ros.LookupException,
-            tf2_ros.ConnectivityException,
-            tf2_ros.ExtrapolationException,
-        ):
-            raise
+    #     except (
+    #         tf2_ros.LookupException,
+    #         tf2_ros.ConnectivityException,
+    #         tf2_ros.ExtrapolationException,
+    #     ):
+    #         raise
 
     def msg_to_se3(self, p, q):
         """Conversion from geometric ROS messages into SE(3)
