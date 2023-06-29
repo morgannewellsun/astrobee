@@ -2,21 +2,18 @@
 
 from __future__ import division
 
-import argparse
-import os
+
 
 # Python imports
-import sys
+import os
 import timeit
-
-import cv2
-import numpy as np
 
 # ROS imports
 import rospy
-import std_msgs.msg
 
 # Deep learning imports
+import cv2
+import numpy as np
 import torch
 import torchvision
 from cv_bridge import CvBridge
@@ -27,11 +24,11 @@ from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
 from torchvision import transforms
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
-from tqdm import tqdm
-from utils.np_to_multiarray import convert_np_to_rosmsg
 from utils.undistorter import Undistorter
 
+
 convert_tensor = transforms.ToTensor()
+
 
 # Get package path in file directory
 package = RosPack()

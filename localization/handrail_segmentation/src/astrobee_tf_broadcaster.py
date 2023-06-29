@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import geometry_msgs
-import roslib
 import rospy
 import tf2_ros
 from handrail_segmentation.msg import EkfState

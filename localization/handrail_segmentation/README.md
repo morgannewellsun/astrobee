@@ -2,6 +2,8 @@ This module contains the code for handrail pose estimation. The worlds directory
 
 ### Running handrail ICP localization nodes
 
+(Note: This methodology is messy and should be updated.)
+
 1. Update the reference pointcloud filepath in the `pointcloud_callback` function in `.../handrail_segmentation/src/icp_pose_estimator.py`.
 2. Install prerequisites (will not work in a venv; prerequisite structure is messy; `.../handrail_segmentation/requirements.txt` seems to work but still has some weird issues)
 2. `roslaunch .../handrail_segmentation/launch/sim_handrail.launch` (this launches the three nodes required for handrail segmentation, masking, and ICP)

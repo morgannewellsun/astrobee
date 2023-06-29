@@ -1,5 +1,5 @@
 import numpy as np
-from std_msgs.msg import Int16MultiArray, MultiArrayDimension
+from std_msgs.msg import Int16MultiArray
 
 
 def convert_np_to_rosmsg(np_array):
