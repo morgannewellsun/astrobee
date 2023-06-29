@@ -1,3 +1,6 @@
+# TODO: COPYRIGHT
+# https://github.com/pytorch/vision/blob/main/references/detection/coco_utils.py
+
 import copy
 import os
 

@@ -1,3 +1,6 @@
+# TODO: COPYRIGHT
+# https://github.com/pytorch/vision/blob/main/references/detection/engine.py
+
 import math
 import sys
 import time

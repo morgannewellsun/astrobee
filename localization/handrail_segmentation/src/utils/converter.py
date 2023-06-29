@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# TODO: COPYRIGHT
+# https://github.com/felixchenfy/3D-Scanner-by-Baxter/blob/master/src_python/lib_cloud_conversion_between_Open3D_and_ROS.py
 
 """
 This script contains 2 functions for converting cloud format between Open3D and ROS:

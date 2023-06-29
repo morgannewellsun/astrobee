@@ -1,3 +1,6 @@
+# TODO: COPYRIGHT
+# https://github.com/pytorch/vision/blob/main/torchvision/transforms/autoaugment.py
+
 import math
 import random
 from enum import Enum

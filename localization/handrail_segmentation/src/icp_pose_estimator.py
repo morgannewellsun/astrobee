@@ -1,24 +1,42 @@
 #!/usr/bin/env python3
+#
+# Copyright (c) 2017, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+#
+# All rights reserved.
+#
+# The Astrobee platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the
+# License. You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
 
+
+# Python imports
 from __future__ import division
-
 import copy
 import timeit
 
-import geometry_msgs
+# Third party imports
 import numpy as np
 import open3d as o3d
+from probreg import cpd
+from scipy.spatial.transform import Rotation as R
+
+# ROS imports
+import geometry_msgs
 import rospy
 import tf2_ros
-# import utils.icp
-# import utils.icp as icp
 from geometry_msgs.msg import Pose
-# from handrail_segmentation.msg import EkfState
-from probreg import cpd
-# from rospkg import RosPack
-from scipy.spatial.transform import Rotation as R
 from sensor_msgs.msg import PointCloud2
-# from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
+
+# Local imports
 from utils.converter import *
 from utils.transformation import TransformAlignment
 

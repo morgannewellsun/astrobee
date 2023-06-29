@@ -1,3 +1,6 @@
+# TODO: COPYRIGHT
+# https://github.com/ClayFlannigan/icp/blob/master/icp.py
+
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 

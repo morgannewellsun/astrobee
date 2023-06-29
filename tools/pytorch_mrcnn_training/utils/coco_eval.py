@@ -1,3 +1,6 @@
+# TODO: COPYRIGHT
+# https://github.com/IntelLabs/distiller/blob/master/examples/object_detection_compression/coco_eval.py
+
 import copy
 import json
 import tempfile

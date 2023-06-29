@@ -1,29 +1,46 @@
 #!/usr/bin/env python3
-
-from __future__ import division
-
+#
+# Copyright (c) 2017, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+#
+# All rights reserved.
+#
+# The Astrobee platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the
+# License. You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
 
 
 # Python imports
+from __future__ import division
 import os
 import timeit
 
-# ROS imports
-import rospy
-
-# Deep learning imports
+# Third party imports
 import cv2
 import numpy as np
 import torch
 import torchvision
-from cv_bridge import CvBridge
-from PIL import Image
-from rospkg import RosPack
-from sensor_msgs.msg import Image as ROSImage
-from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
 from torchvision import transforms
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
+from PIL import Image
+
+# ROS imports
+import rospy
+from cv_bridge import CvBridge
+from rospkg import RosPack
+from sensor_msgs.msg import Image as ROSImage
+from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
+
+# Local imports
 from utils.undistorter import Undistorter
 
 
@@ -96,7 +113,7 @@ class HandrailDetectorManager:
         # self.weights_path = os.path.join(package_path, "src/weights", weights_name)
         weights_name = "handrail_finetune_ckpt_199.pth"
         self.weights_path = os.path.join("/usr/local/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/pytorch_mrcnn/checkpoints", weights_name)
-        rospy.loginfo("Found weights, loading %s", self.weights_path)
+        rospy.loginfo("Attempting to load weights %s", self.weights_path)
 
         # Raise error if it cannot find the model
         if not os.path.isfile(self.weights_path):

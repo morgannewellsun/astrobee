@@ -1,3 +1,6 @@
+# TODO: COPYRIGHT
+# https://github.com/lmbxmu/SuperViT/blob/main/utils.py
+
 import datetime
 import errno
 import os
