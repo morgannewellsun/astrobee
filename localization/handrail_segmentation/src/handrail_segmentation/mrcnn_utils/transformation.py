@@ -16,12 +16,12 @@
 # under the License.
 
 
+# Third party imports
 import numpy as np
-# import open3d
-# import pcl
+
+# ROS imports
 import ros_numpy
 import rospy
-# import tf2_geometry_msgs
 import tf2_py as tf2
 import tf2_ros
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud

@@ -16,8 +16,10 @@
 # under the License.
 
 
+# Third party imports
 import cv2
 import numpy as np
+
 
 assert (
     float(cv2.__version__.rsplit(".", 1)[0]) >= 3

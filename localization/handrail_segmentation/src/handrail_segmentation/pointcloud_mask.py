@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright (c) 2017, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
 #
@@ -36,9 +34,9 @@ from sensor_msgs.msg import Image as ROSImage
 from sensor_msgs.msg import PointCloud2
 
 # Local imports
-from utils.converter import *
-from utils.undistorter import Undistorter
-from utils.transformation import TransformAlignment
+from mrcnn_utils.converter import *
+from mrcnn_utils.undistorter import Undistorter
+from mrcnn_utils.transformation import TransformAlignment
 
 
 # Get package path in file directory
@@ -209,14 +207,3 @@ class PerchCamProcess:
 
             self.pc = None
             self.mask = None
-
-
-if __name__ == "__main__":
-    # Initialize node
-    rospy.init_node("pointcloud_mask_processor_node")
-
-    # Define detector object
-    dm = PerchCamProcess()
-
-    # Spin
-    rospy.spin()

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright (c) 2017, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
 #
@@ -38,10 +36,10 @@ import rospy
 from cv_bridge import CvBridge
 from rospkg import RosPack
 from sensor_msgs.msg import Image as ROSImage
-from std_msgs.msg import Int16MultiArray, MultiArrayDimension, UInt8
+from std_msgs.msg import Int16MultiArray, MultiArrayDimension
 
 # Local imports
-from utils.undistorter import Undistorter
+from mrcnn_utils.undistorter import Undistorter
 
 
 convert_tensor = transforms.ToTensor()
@@ -231,14 +229,3 @@ class HandrailDetectorManager:
         self.pub_viz_.publish(self.bridge.cv2_to_imgmsg(annotated_img, "rgb8"))
 
         return True
-
-
-if __name__ == "__main__":
-    # Initialize node
-    rospy.init_node("handrail_detector_node")
-
-    # Define detector object
-    dm = HandrailDetectorManager()
-
-    # Spin
-    rospy.spin()

@@ -1,3 +1,8 @@
+
+### WARNING
+### THIS README IS OUT OF DATE
+### WARNING
+
 This module contains the code for handrail pose estimation. The worlds directory contains the ignition gazebo ported world used to generate the training data for the segmentation model as well as the plugins written. Furthermore, pytorch_mrcnn contains the training and testing scripts utilized for the mask rcnn. Inside launch you can see the launch file for simulation and for bag files recorded in granite lab. Note that handrail_detector.py inside of src is where I put effort for optimizing and got the detections up to 0.3 Hz.
 
 ### Running handrail ICP localization nodes

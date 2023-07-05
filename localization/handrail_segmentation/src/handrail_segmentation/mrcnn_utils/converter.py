@@ -16,14 +16,20 @@ This script also contains a test case, which does such a thing:
 You can test this script's function by rosrun this script.
 """
 
+
+# Python imports
 from ctypes import *  # convert float to uint32
 
+# Third party imports
 import numpy as np
 import open3d
+
+# ROS imports
 import rospy
 import sensor_msgs.point_cloud2 as pc2
-from sensor_msgs.msg import PointCloud2, PointField
+from sensor_msgs.msg import PointField
 from std_msgs.msg import Header
+
 
 # The data structure of each point in ros PointCloud2: 16 bits = x + y + z + rgb
 FIELDS_XYZ = [
@@ -34,6 +40,7 @@ FIELDS_XYZ = [
 FIELDS_XYZRGB = FIELDS_XYZ + [
     PointField(name="rgb", offset=12, datatype=PointField.UINT32, count=1)
 ]
+
 
 # Bit operations
 BIT_MOVE_16 = 2**16
@@ -46,6 +53,7 @@ convert_rgbUint32_to_tuple = lambda rgb_uint32: (
 convert_rgbFloat_to_tuple = lambda rgb_float: convert_rgbUint32_to_tuple(
     int(cast(pointer(c_float(rgb_float)), POINTER(c_uint32)).contents.value)
 )
+
 
 # Convert the datatype of point cloud from Open3D to ROS PointCloud2 (XYZRGB only)
 def convertCloudFromOpen3dToRos(open3d_cloud, frame_id="odom"):
@@ -114,6 +122,7 @@ def convertCloudFromRosToOpen3d(ros_cloud):
     return open3d_cloud
 
 
+# More ROS imports
 import sensor_msgs.msg as sensor_msgs
 import std_msgs.msg as std_msgs
 from sensor_msgs import point_cloud2
