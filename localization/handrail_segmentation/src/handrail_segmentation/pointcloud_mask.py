@@ -1,4 +1,4 @@
-# Copyright (c) 2017, United States Government, as represented by the
+#Copyright (c) 2017, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
 #
 # All rights reserved.
@@ -34,9 +34,9 @@ from sensor_msgs.msg import Image as ROSImage
 from sensor_msgs.msg import PointCloud2
 
 # Local imports
-from mrcnn_utils.converter import *
-from mrcnn_utils.undistorter import Undistorter
-from mrcnn_utils.transformation import TransformAlignment
+from .mrcnn_utils.converter import *
+from .mrcnn_utils.undistorter import Undistorter
+from .mrcnn_utils.transformation import TransformAlignment
 
 
 # Get package path in file directory

@@ -35,8 +35,8 @@ from geometry_msgs.msg import Pose
 from sensor_msgs.msg import PointCloud2
 
 # Local imports
-from mrcnn_utils.converter import *
-from mrcnn_utils.transformation import TransformAlignment
+from .mrcnn_utils.converter import *
+from .mrcnn_utils.transformation import TransformAlignment
 
 
 def draw_registration_result(source, target, transformation):

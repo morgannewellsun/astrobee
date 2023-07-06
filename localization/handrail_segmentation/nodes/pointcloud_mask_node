@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from pointcloud_mask import *
+from handrail_segmentation.pointcloud_mask import *
 
 
 if __name__ == "__main__":

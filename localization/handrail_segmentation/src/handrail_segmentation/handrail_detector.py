@@ -39,7 +39,7 @@ from sensor_msgs.msg import Image as ROSImage
 from std_msgs.msg import Int16MultiArray, MultiArrayDimension
 
 # Local imports
-from mrcnn_utils.undistorter import Undistorter
+from .mrcnn_utils.undistorter import Undistorter
 
 
 convert_tensor = transforms.ToTensor()
