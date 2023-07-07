@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+ROOT_DEPS="${SCRIPT_DIR}/../requirements/debian_requirements_root.txt"
+COMPLETE_DEPS="${SCRIPT_DIR}/../requirements/debian_requirements_complete.txt"
+
+# Initialize the recursive deps file as empty
+> $COMPLETE_DEPS
+
+# Read each package from the root deps file
+while read package; do
+  # Get the recursive dependencies for the package, reverse the order, and append to the recursive deps file
+  apt-rdepends "$package" | grep -E '^[a-zA-Z0-9]' | tac >> $COMPLETE_DEPS
+done < $ROOT_DEPS
+
+# Remove duplicate dependencies
+awk '!a[$0]++' $COMPLETE_DEPS > tmp && mv tmp $COMPLETE_DEPS
+
