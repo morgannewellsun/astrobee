@@ -5,10 +5,13 @@ FILTERED_DEPS="${SCRIPT_DIR}/../requirements/debian_requirements_filtered.txt"
 DOWNLOAD_DIR="${SCRIPT_DIR}/../debian_downloads"
 
 # Make sure the download directory exists
+rm -rf $DOWNLOAD_DIR
 mkdir -p $DOWNLOAD_DIR
 
 # Read each package from the filtered deps file
+pushd $DOWNLOAD_DIR
 while read package; do
   # Download the package
-  apt-get download $package -o Dir::Cache::Archives=$DOWNLOAD_DIR
+  apt-get download $package
 done < $FILTERED_DEPS
+popd

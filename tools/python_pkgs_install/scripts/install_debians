@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+FILTERED_DEPS="${SCRIPT_DIR}/../requirements/debian_requirements_filtered.txt"
+DOWNLOAD_DIR="${SCRIPT_DIR}/../debian_downloads"
+
+# Read each package from the filtered deps file
+while read package; do
+  # Find the .deb file for this package
+  DEB_FILE=$(find "$DOWNLOAD_DIR" -type f -name "${package}_*.deb")
+  
+  # Install the package
+  sudo dpkg -i "$DEB_FILE"
+done < $FILTERED_DEPS
+

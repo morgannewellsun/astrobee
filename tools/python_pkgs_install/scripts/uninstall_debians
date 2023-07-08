@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+FILTERED_DEPS="${SCRIPT_DIR}/../requirements/debian_requirements_filtered.txt"
+
+# Read each package from the filtered deps file in reverse order
+tac $FILTERED_DEPS | while read package; do
+  # Uninstall the package
+  sudo dpkg --purge "$package"
+done
+

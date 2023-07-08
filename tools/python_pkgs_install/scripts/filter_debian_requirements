@@ -5,6 +5,7 @@ COMPLETE_DEPS="${SCRIPT_DIR}/../requirements/debian_requirements_complete.txt"
 FILTERED_DEPS="${SCRIPT_DIR}/../requirements/debian_requirements_filtered.txt"
 
 # Initialize the filtered deps file as empty
+rm -f $FILTERED_DEPS
 > $FILTERED_DEPS
 
 # Filter dependencies based on if they're installed

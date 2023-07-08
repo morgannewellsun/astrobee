@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+REQUIREMENTS_DIR="${SCRIPT_DIR}/../requirements"
+LIB_DIR="${SCRIPT_DIR}/../lib"
+
+# Uninstall new packages
+pip3 uninstall -y -r "${REQUIREMENTS_DIR}/uninstall.txt"
+rm -r $LIB_DIR
