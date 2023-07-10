@@ -105,9 +105,13 @@ def get_trained_model(weights_path, num_classes=5):
 
 class HandrailDetectorManager:
     def __init__(self):
+
         self.simulation = True
         # Load weights parameter
-        self.weights_path = os.path.join("/usr/local/home/mnsun/large_files/checkpoints", "handrail_finetune_ckpt_199.pth")
+        handrail_segmentation_resources_path = os.getenv("HANDRAIL_SEGMENTATION_RESOURCES_PATH")
+        if handrail_segmentation_resources_path is None:
+            raise RuntimeError("Environment variable HANDRAIL_SEGMENTATION_RESOURCES_PATH was not set.")
+        self.weights_path = os.path.join(handrail_segmentation_resources_path, "checkpoints/handrail_finetune_ckpt_199.pth")
         rospy.loginfo("Attempting to load weights %s", self.weights_path)
 
         # Raise error if it cannot find the model

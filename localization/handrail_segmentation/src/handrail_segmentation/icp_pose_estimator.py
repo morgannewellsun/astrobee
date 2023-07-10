@@ -20,6 +20,7 @@
 from __future__ import division
 import copy
 import timeit
+import os
 
 # Third party imports
 import numpy as np
@@ -111,9 +112,13 @@ class DOFPoseEstimator:
         detected_handrail_o3d = o3d.geometry.PointCloud()
         detected_handrail_o3d.points = o3d.utility.Vector3dVector(detected_handrail)
 
+        # load reference pointcloud from path specified in environment variable
+        handrail_segmentation_resources_path = os.getenv("HANDRAIL_SEGMENTATION_RESOURCES_PATH")
+        if handrail_segmentation_resources_path is None:
+            raise RuntimeError("Environment variable HANDRAIL_SEGMENTATION_RESOURCES_PATH was not set.")
         registered_handrail_o3d = o3d.io.read_point_cloud(
-            "/usr/local/home/mnsun/large_files/reference_pointclouds/handrail_30.pcd"
-        )
+            os.path.join(
+                handrail_segmentation_resources_path, "reference_pointclouds/handrail_30.pcd"))
         registered_handrail = np.asarray(registered_handrail_o3d.points)
         self.pub_non_transform.publish(
             convertPc2(registered_handrail, frame_id="dock_cam")
