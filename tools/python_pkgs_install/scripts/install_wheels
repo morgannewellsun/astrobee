@@ -5,37 +5,35 @@ WHEEL_DIR="${SCRIPT_DIR}/../wheel_downloads"
 REQUIREMENTS_DIR="${SCRIPT_DIR}/../requirements"
 TARGET_DIR="${SCRIPT_DIR}/../lib/python3/dist-packages"
 
-# Freeze the initial state
-initial_file="${REQUIREMENTS_DIR}/astrobee_state_initial.txt"
-pip3 freeze > $initial_file
+# # Freeze the initial state
+# initial_file="${REQUIREMENTS_DIR}/astrobee_state_initial.txt"
+# pip3 freeze > $initial_file
 
 # Install packages
 pip3 install --no-index -f ${WHEEL_DIR} --target ${TARGET_DIR} -r "${REQUIREMENTS_DIR}/wheel_requirements_root.txt"
 
-# Update PYTHONPATH
-export PYTHONPATH=${TARGET_DIR}:$PYTHONPATH
-
+# # Update PYTHONPATH
+# export PYTHONPATH=${TARGET_DIR}:$PYTHONPATH
+# 
 # Freeze the final state
-final_file="${REQUIREMENTS_DIR}/astrobee_state_final.txt"
-pip3 freeze > $final_file
-
-# create or clear output files
-> "${REQUIREMENTS_DIR}/uninstall.txt"
-> "${REQUIREMENTS_DIR}/downgrade.txt"
-
-# read initial file and create an associative array with package as key and version as value
-declare -A initial_packages
-while IFS="==" read -r package version; do
-  initial_packages[$package]=$version
-done < $initial_file
-
-# read final file and compare with initial packages
-while IFS="==" read -r package version; do
-  # if package is not in initial_packages, it needs to be uninstalled
-  if [[ -z ${initial_packages[$package]} ]]; then
-    echo $package >> "${REQUIREMENTS_DIR}/uninstall.txt"
-  # if package is in initial_packages but with different version, it needs to be downgraded
-  elif [[ $version != ${initial_packages[$package]} ]]; then
-    echo "${package}==${initial_packages[$package]}" >> "${REQUIREMENTS_DIR}/downgrade.txt"
-  fi
-done < $final_file
+# final_file="${REQUIREMENTS_DIR}/astrobee_state_final.txt"
+# pip3 freeze > $final_file
+# 
+# # Create or clear output files
+# > "${REQUIREMENTS_DIR}/uninstall.txt"
+# > "${REQUIREMENTS_DIR}/downgrade.txt"
+# 
+# # Generate files showing changes between initial and final state
+# declare -A initial_packages
+# while IFS="==" read -r package version; do
+#   initial_packages[$package]=$version
+# done < $initial_file
+# while IFS="==" read -r package version; do
+#   # if package is not in initial_packages, it needs to be uninstalled
+#   if [[ -z ${initial_packages[$package]} ]]; then
+#     echo $package >> "${REQUIREMENTS_DIR}/uninstall.txt"
+#   # if package is in initial_packages but with different version, it needs to be downgraded
+#   elif [[ $version != ${initial_packages[$package]} ]]; then
+#     echo "${package}==${initial_packages[$package]}" >> "${REQUIREMENTS_DIR}/downgrade.txt"
+#   fi
+# done < $final_file
