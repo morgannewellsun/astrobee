@@ -112,7 +112,7 @@ class DOFPoseEstimator:
         detected_handrail_o3d.points = o3d.utility.Vector3dVector(detected_handrail)
 
         registered_handrail_o3d = o3d.io.read_point_cloud(
-            "/home/mnsun/ros_ws/astrobee/src/localization/handrail_segmentation/src/reference_pointclouds/handrail_30.pcd"
+            "/usr/local/home/mnsun/large_files/reference_pointclouds/handrail_30.pcd"
         )
         registered_handrail = np.asarray(registered_handrail_o3d.points)
         self.pub_non_transform.publish(
