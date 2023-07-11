@@ -1,0 +1,15 @@
+install-info:armhf
+install-info
+libtextwrap1:armhf
+libslang2:armhf
+libnewt0.52:armhf
+libdebian-installer4:armhf
+cdebconf:armhf
+libtextwrap1
+libslang2
+libnewt0.52
+libdebian-installer4
+cdebconf
+python-pip-whl
+python3-wheel
+python3-pip
