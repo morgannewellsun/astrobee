@@ -4,8 +4,14 @@
 # CONFIGURATION
 # =============================================================================
 
+# Local system sources.list
 SOURCES_LIST="/etc/apt/sources.list"
-ARCHITECTURES=("all" "armhf")
+
+# Ubuntu version; must be shared between local system and Astrobee
+UBUNTU_VERSION="focal"
+
+# Architecture used by Astrobee
+ARCHITECTURE="armhf"
 
 # =============================================================================
 # FUNCTION DEFINITIONS
@@ -16,9 +22,9 @@ function cleanup {
     echo "Reverting some stuff before exiting."
 
     # Restore original dpkg architecture configuration
-    sudo dpkg --remove-architecture armhf
-    while read -r architecture; do 
-        sudo dpkg --add-architecture "$architecture"
+    sudo dpkg --remove-architecture ${ARCHITECTURE}
+    while read -r architecture_to_restore; do 
+        sudo dpkg --add-architecture "$architecture_to_restore"
     done < "${LOCAL_TOOL_DIR}/${FOREIGN_ARCHS_LIST_REL}"
 
     # Restore original sources.list
@@ -80,30 +86,30 @@ if ssh $ASTROBEE_ADDRESS "[ -d $ASTROBEE_TOOL_DIR ]"; then
 fi
 scp -r $LOCAL_TOOL_DIR "${ASTROBEE_ADDRESS}:${ASTROBEE_TOOL_DIR}"
 
-# Set up dpkg for armhf architecture: Back up sources.list
+# Set up dpkg for target architecture: Back up sources.list
 sudo cp ${SOURCES_LIST} ${SOURCES_LIST}.bak
 
-# Set up dpkg for armhf architecture: Add armhf ports to sources.list
+# Set up dpkg for target architecture: Add target architecture ports to sources.list
 sudo tee -a "$SOURCES_LIST" > /dev/null <<EOF
-deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports focal main restricted universe multiverse
-deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports focal-updates main restricted universe multiverse
-deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports focal-security main restricted universe multiverse
+deb [arch=${ARCHITECTURE}] http://ports.ubuntu.com/ubuntu-ports ${UBUNTU_VERSION} main restricted universe multiverse
+deb [arch=${ARCHITECTURE}] http://ports.ubuntu.com/ubuntu-ports ${UBUNTU_VERSION}-updates main restricted universe multiverse
+deb [arch=${ARCHITECTURE}] http://ports.ubuntu.com/ubuntu-ports ${UBUNTU_VERSION}-security main restricted universe multiverse
 EOF
 
-# Set up dpkg for armhf architecture: Back up foreign architectures
+# Set up dpkg for target architecture: Back up foreign architectures
 dpkg --print-foreign-architectures > "${LOCAL_TOOL_DIR}/${FOREIGN_ARCHS_LIST_REL}"
 
-# Set up dpkg for armhf architecture: Set foreign architectures to only armhf
-while read -r architecture; do 
-    sudo dpkg --remove-architecture "$architecture"
+# Set up dpkg for target architecture: Set foreign architectures to only target architecture
+while read -r architecture_to_remove; do 
+    sudo dpkg --remove-architecture "$architecture_to_remove"
 done < "${LOCAL_TOOL_DIR}/${FOREIGN_ARCHS_LIST_REL}"
-sudo dpkg --add-architecture armhf
+sudo dpkg --add-architecture ${ARCHITECTURE}
 
-# Set up dpkg for armhf architecture: Update apt
+# Set up dpkg for target architecture: Update apt
 sudo apt-get update
 
 # User confirmation
-echo "Local system configured for downloading armhf packages. About to collect dependency list on local system."
+echo "Local system configured for downloading ${ARCHITECTURE} packages. About to collect dependency list on local system."
 confirm_or_continue
 
 # =============================================================================
@@ -153,12 +159,13 @@ confirm_or_continue
 # =============================================================================
 
 # Read each package from the filtered dependencies file and download it
+acceptable_architectures=("${ARCHITECTURE}" "all")
 mkdir "${LOCAL_TOOL_DIR}/${DEBIAN_DIR_REL}"
 pushd "${LOCAL_TOOL_DIR}/${DEBIAN_DIR_REL}"
 while read package; do
     download_success=false
-    for architecture in "${ARCHITECTURES[@]}"; do
-        apt-get download "${package}:${architecture}"
+    for acceptable_architecture in "${acceptable_architectures[@]}"; do
+        apt-get download "${package}:${acceptable_architecture}"
         if [ $? -eq 0 ]; then
             download_success=true
             break

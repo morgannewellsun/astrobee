@@ -4,8 +4,11 @@
 # CONFIGURATION
 # =============================================================================
 
+# Local system sources.list
 SOURCES_LIST="/etc/apt/sources.list"
-ARCHITECTURES=("all" "armhf")
+
+# Architecture used by Astrobee
+ARCHITECTURE="armhf"
 
 # =============================================================================
 # CLEANUP
@@ -22,9 +25,9 @@ FOREIGN_ARCHS_LIST_REL="${TEMP_DIR_REL}/foreign_architectures.txt"
 echo "Reverting some stuff."
 
 # Restore original dpkg architecture configuration
-sudo dpkg --remove-architecture armhf
-while read -r architecture; do 
-    sudo dpkg --add-architecture "$architecture"
+sudo dpkg --remove-architecture ${ARCHITECTURE}
+while read -r architecture_to_restore; do 
+    sudo dpkg --add-architecture "$architecture_to_restore"
 done < "${LOCAL_TOOL_DIR}/${FOREIGN_ARCHS_LIST_REL}"
 
 # Restore original sources.list
@@ -32,3 +35,4 @@ sudo mv ${SOURCES_LIST}.bak ${SOURCES_LIST}
 
 # Remove temporary directory
 rm -rf "${LOCAL_TOOL_DIR}/${TEMP_DIR_REL}"
+
