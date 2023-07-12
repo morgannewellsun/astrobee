@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-TARGET_DIR="${SCRIPT_DIR}/../lib/python3/dist-packages"
-
-# Remove the target directory
-rm -r $TARGET_DIR

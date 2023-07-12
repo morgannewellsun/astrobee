@@ -72,18 +72,16 @@ FOREIGN_ARCHS_LIST_REL="${TEMP_DIR_REL}/foreign_architectures.txt"
 DEBIAN_DIR_REL="${TEMP_DIR_REL}/debians"
 LOGS_DIR_REL="logs"
 
-# Ensure temporary directory on the local machine doesn't already exist, then create it
+# Ensure temporary directory on the local machine and target directory on Astrobee don't already exist, then create them
 if [ -d "${LOCAL_TOOL_DIR}/${TEMP_DIR_REL}" ]; then
     echo "Error: Temporary directory found on online machine. Please ensure things were cleaned up after the last time this tool was used."
     exit 1
 fi
-mkdir "${LOCAL_TOOL_DIR}/${TEMP_DIR_REL}"
-
-# Ensure target directory on the Astrobee doesn't already exist, then create it
 if ssh $ASTROBEE_ADDRESS "[ -d $ASTROBEE_TOOL_DIR ]"; then
     echo "Error: Install target directory already exists on Astrobee. Please ensure things were cleaned up after the last time this tool was used."
     exit 1
 fi
+mkdir "${LOCAL_TOOL_DIR}/${TEMP_DIR_REL}"
 scp -r $LOCAL_TOOL_DIR "${ASTROBEE_ADDRESS}:${ASTROBEE_TOOL_DIR}"
 
 # Set up dpkg for target architecture: Back up sources.list
