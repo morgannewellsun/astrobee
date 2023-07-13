@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# =============================================================================
-# FUNCTION DEFINITIONS
-# =============================================================================
-
-# build_tools=(wheel six configobj typing-extensions tomli)
 
 # =============================================================================
 # FUNCTION DEFINITIONS
@@ -38,31 +33,12 @@ LOCAL_TOOL_DIR=$(dirname "$SCRIPTS_DIR")
 REQUIREMENTS_DIR_REL="requirements"
 PACKAGE_LIST_REL="${REQUIREMENTS_DIR_REL}/wheel_requirements.txt"
 TEMP_DIR_REL="temp"
-PIP_FREEZE_REL="${TEMP_DIR_REL}/astrobee_initial_freeze.txt"
-VENV_DIR_REL="${TEMP_DIR_REL}/venv"
 WHEEL_DIR_REL="${TEMP_DIR_REL}/wheels"
 INSTALL_DIR_REL="lib/python3/dist-packages"
 
-# # Check pip version >= 20.3
-# pip_version=$(pip3 --version | awk '{print $2}')
-# IFS='.' read -ra version_parts <<< "$pip_version"
-# if [ "${version_parts[0]}" -lt 20 ] || ([ "${version_parts[0]}" -eq 20 ] && [ "${version_parts[1]}" -lt 3 ]); then
-#     echo "Error: pip3 version must be at least 20.3"
-#     exit 1
-# fi
-
-# Check if venv is installed
-python3 -m venv dummy_venv &> /dev/null
-if [ $? -eq 0 ]; then
-    rm -rf dummy_venv
-else
-    echo "Error: venv is not installed."
-    exit 1
-fi
-
 # Ensure temporary directory on the local machine and target directory on Astrobee don't already exist, then create them
 if [ -d "${LOCAL_TOOL_DIR}/${TEMP_DIR_REL}" ]; then
-    echo "Warning: Temporary directory found on local system. Deleting."
+    echo "Warning: Temporary directory found on online machine. Deleting."
     rm -r "${LOCAL_TOOL_DIR}/${TEMP_DIR_REL}" 
 fi
 if ssh $ASTROBEE_ADDRESS "[ -d $ASTROBEE_TOOL_DIR ]"; then
@@ -73,56 +49,15 @@ mkdir "${LOCAL_TOOL_DIR}/${TEMP_DIR_REL}"
 scp -r $LOCAL_TOOL_DIR "${ASTROBEE_ADDRESS}:${ASTROBEE_TOOL_DIR}"
 
 # User confirmation
-echo "Local system and Astrobee in a clean state. About to get pip freeze of Astrobee environment."
+echo "Local system and Astrobee in a clean state. About to download wheels on local system."
 confirm_or_continue
-
-# =============================================================================
-# PIP FREEZE ASTROBEE ENVIRONMENT
-# =============================================================================
-
-# Pip freeze the Astrobee Python environment
-ssh ${ASTROBEE_ADDRESS} <<EOT
-pip3 freeze > "${ASTROBEE_TOOL_DIR}/${PIP_FREEZE_REL}"
-EOT
-
-# Transfer the pip freeze to Astrobee
-scp -r "${ASTROBEE_ADDRESS}:${ASTROBEE_TOOL_DIR}/${PIP_FREEZE_REL}" "${LOCAL_TOOL_DIR}/${PIP_FREEZE_REL}" 
-
-# User confirmation
-echo "Pip freeze of Astrobee environment obtained. About to create venv on local system."
-confirm_or_continue
-
-# =============================================================================
-# CREATE LOCAL VENV
-# =============================================================================
-
-# # Create and activate the virtual environment
-# python3 -m venv "${LOCAL_TOOL_DIR}/${VENV_DIR_REL}"
-# source "${LOCAL_TOOL_DIR}/${VENV_DIR_REL}/bin/activate"
-# pip3 install --upgrade pip
-
-# # Install some build tools
-# for build_tool in "${build_tools[@]}"; do
-#     pip3 install $build_tool
-# done
-
-# # Read requirements file and install each package individually, ignoring dependencies
-# while IFS= read -r line; do
-#     pip3 install --no-deps "$line" || echo "Failed to install $line"
-# done < "${LOCAL_TOOL_DIR}/${PIP_FREEZE_REL}"
-
-# # User confirmation
-# echo "Venv created on local system. About to download wheels on local system."
-# confirm_or_continue
 
 # =============================================================================
 # DOWNLOAD PYTHON PACKAGES
 # =============================================================================
 
 # Download all wheels
-pip3 wheel -w "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}" -r "${LOCAL_TOOL_DIR}/${PACKAGE_LIST_REL}" -c "${LOCAL_TOOL_DIR}/${PIP_FREEZE_REL}"
-# pip3 wheel -w "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}" -r "${LOCAL_TOOL_DIR}/${PACKAGE_LIST_REL}"
-# pip3 download -r "${LOCAL_TOOL_DIR}/${PACKAGE_LIST_REL}" -d "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}"
+pip3 wheel -w "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}" -r "${LOCAL_TOOL_DIR}/${PACKAGE_LIST_REL}"
 
 # User confirmation
 echo "Python packages downloaded on local system. About to copy to Astrobee."
