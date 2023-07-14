@@ -7,5 +7,5 @@
 
 ### Workflow for uninstalling debians on the robots
 
-1. On Astrobee, run `./scripts/uninstall_debians` to uninstall debians.
+1. On Astrobee, run `./scripts/uninstall_debians` to uninstall debians. (NOTE: The file `temp/debian_dependencies_list_filtered.txt` is necessary to do this. If you accidently deleted it, check the logs folder for a backup.)
 2. Remove the tool folder on Astrobee to complete the uninstall.

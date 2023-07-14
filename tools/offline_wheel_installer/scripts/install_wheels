@@ -89,7 +89,7 @@ EOT
 scp -r "${ASTROBEE_ADDRESS}:${ASTROBEE_TOOL_DIR}/${PIP_FREEZE_REL}" "${LOCAL_TOOL_DIR}/${PIP_FREEZE_REL}" 
 
 # User confirmation
-echo "Pip freeze of Astrobee environment obtained. About to create venv on local system."
+echo "Pip freeze of Astrobee environment obtained. About to download wheels on local system." # About to create venv on local system."
 confirm_or_continue
 
 # =============================================================================
@@ -120,9 +120,17 @@ confirm_or_continue
 # =============================================================================
 
 # Download all wheels
+# NOTE: This script doesn't work for cross-platform stuff.
+# You can fix it by using `pip3 download` with the `--platform`, `python-version`, `--implementation`, and `--abi` tags.
+# I'm not gonna do this because it turns out the packages I want to install don't have armv7l distributions anyways.
+# pip3 download -d "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}" -r "${LOCAL_TOOL_DIR}/${PACKAGE_LIST_REL}" c "${LOCAL_TOOL_DIR}/${PIP_FREEZE_REL}"
 pip3 wheel -w "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}" -r "${LOCAL_TOOL_DIR}/${PACKAGE_LIST_REL}" -c "${LOCAL_TOOL_DIR}/${PIP_FREEZE_REL}"
-# pip3 wheel -w "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}" -r "${LOCAL_TOOL_DIR}/${PACKAGE_LIST_REL}"
-# pip3 download -r "${LOCAL_TOOL_DIR}/${PACKAGE_LIST_REL}" -d "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}"
+
+# Cull wheels for packages already installed on Astrobee
+while IFS= read -r line; do
+    package_name=$(echo $line | awk -F'[==,>=,<=]' '{print $1}' | awk '{$1=$1};1' | tr '[:upper:]' '[:lower:]')
+    rm -f "${LOCAL_TOOL_DIR}/${WHEEL_DIR_REL}/${package_name}"*.whl
+done < "${LOCAL_TOOL_DIR}/${PIP_FREEZE_REL}"
 
 # User confirmation
 echo "Python packages downloaded on local system. About to copy to Astrobee."
