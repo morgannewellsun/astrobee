@@ -21,10 +21,8 @@
 # Python imports
 import argparse
 import os
-from typing import Optional
 
 # Third party imports
-import cv2
 import numpy as np
 import torch
 import torchvision
@@ -32,10 +30,6 @@ from PIL import Image
 from torchvision import transforms
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
-from tqdm import tqdm
-
-# Local imports
-from utils.visualize import visualize
 
 
 def post_process(detections, num_detections, c_thresh=0.75):
@@ -74,51 +68,30 @@ def get_trained_model(weights_path, num_classes=5):
     return model
 
 
-def main(dataset_path: str, output_path: str, weights_path: str, nms_thresh: Optional[str]):
+def main(dataset_path: str, weights_path: str):
 
     model = get_trained_model(weights_path)
-    model.eval()
+    # model.eval()
 
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
-    img_paths = [
-        os.path.join(dataset_path, img_name)
-        for img_name 
-        in list(sorted(os.listdir(dataset_path)))]
-    img_out_paths = [
-        os.path.join(output_path, img_name)
-        for img_name 
-        in list(sorted(os.listdir(dataset_path)))]
+    img_path = os.path.join(dataset_path, os.listdir(dataset_path)[0])
+    img = Image.open(img_path).convert("RGB")
+    img = [transforms.ToTensor(img)]
+    torch.cuda.synchronize()
+    traced_model = torch.jit.trace(model, img)
 
-    nms_thresh = 0.7 if nms_thresh is None else nms_thresh
-    for img_path, img_out_path in tqdm(zip(img_paths, img_out_paths)):
-        img = Image.open(img_path).convert("RGB")
-        img = [transforms.ToTensor(img)]
-        torch.cuda.synchronize()
-
-        detections = model(img)[0]
-        n = len(detections["labels"])
-        detections = post_process(detections, n)
-
-        annotated_img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-
-        for detection in detections:
-            bbox, mask, label = detection.values()
-
-            np.place(mask, mask > nms_thresh, label)
-            np.place(mask, mask <= nms_thresh, 0)
-
-            annotated_img = visualize(annotated_img, bbox, mask, label)
-
-        cv2.imwrite(img_out_path, annotated_img)
+    output_dir, weights_name_ext = os.path.split(weights_path)
+    weights_name, _ = os.path.splitext(weights_name_ext)
+    output_name_ext = weights_name + "_torchscript.pt"
+    output_path = os.path.join(output_dir, output_name_ext)
+    traced_model.save(output_path)
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--dataset_path", type=str, required=True)
-    parser.add_argument("-o", "--output_path", type=str, required=True)
     parser.add_argument("-w", "--weights_path", type=str, default=None)
-    parser.add_argument("-t", "--nms_thresh", type=float, default=None)
     return parser.parse_args()
 
 
@@ -126,8 +99,6 @@ if __name__ == "__main__":
     args = parse_args()
     main(
         dataset_path=args.dataset_path,
-        output_path=args.output_path,
         weights_path=args.weights_path,
-        nms_thresh=args.nms_thresh,
     )
 
