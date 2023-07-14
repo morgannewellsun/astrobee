@@ -135,12 +135,6 @@ def main(
     num_epochs = n_epochs
     output_label = "mrcnn" if output_label is None else output_label
     for epoch in range(num_epochs):
-        # # train for one epoch, printing every 10 iterations
-        # train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=10)
-        # # update the learning rate
-        # lr_scheduler.step()
-        # # evaluate on the test dataset
-        # evaluate(model, data_loader_test, device=device)
 
         print("\n---- Training Model ----")
         model.train()

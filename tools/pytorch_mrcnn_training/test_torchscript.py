@@ -60,20 +60,8 @@ def post_process(detections, num_detections, c_thresh=0.75):
     return p_detections
 
 
-def get_trained_model(weights_path, num_classes=5):
-    # load an instance segmentation model pre-trained on COCO
-    model = torchvision.models.detection.maskrcnn_resnet50_fpn()
-    # replace the pre-trained head with a new one
-    in_features = model.roi_heads.box_predictor.cls_score.in_features
-    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
-    # and replace the mask predictor with a new one
-    in_features_mask = model.roi_heads.mask_predictor.conv5_mask.in_channels
-    hidden_layer = 256
-    model.roi_heads.mask_predictor = MaskRCNNPredictor(
-        in_features_mask, hidden_layer, num_classes
-    )
-    # load weights
-    model.load_state_dict(torch.load(weights_path))
+def get_trained_model(weights_path):
+    model = torch.jit.load(weights_path)
     return model
 
 
@@ -95,13 +83,13 @@ def main(dataset_path: str, output_path: str, weights_path: str, nms_thresh: Opt
     os.mkdir(output_path)
 
     nms_thresh = 0.7 if nms_thresh is None else nms_thresh
-
+    
     for img_path, img_out_path in tqdm(zip(img_paths, img_out_paths)):
         img = Image.open(img_path).convert("RGB")
         img = [convert_tensor(img)]
         torch.cuda.synchronize()
 
-        detections = model(img)[0]
+        detections = model(img)[1][0]  # note difference to test.py script
         n = len(detections["labels"])
         detections = post_process(detections, n)
 
