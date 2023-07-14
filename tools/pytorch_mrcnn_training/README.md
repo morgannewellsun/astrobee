@@ -11,3 +11,7 @@
 ### Converting model to TorchScript:
 
 - `python3 convert_to_torchscript.py -d "PATH/TO/IMAGES/FOLDER" -w "PATH/TO/CHECKPOINTS/FOLDER/handrail_finetune_ckpt_199.pth"`
+
+### Testing TorchScript model in Python:
+
+- `python3 test_torchscript.py -d "PATH/TO/IMAGES/FOLDER" -o "PATH/TO/OUTPUTS/FOLDER" -w "PATH/TO/CHECKPOINTS/FOLDER/handrail_finetune_ckpt_199_torchscript.pt"`

@@ -32,6 +32,9 @@ from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 
 
+convert_tensor = transforms.ToTensor()
+
+
 def post_process(detections, num_detections, c_thresh=0.75):
     # print(detections)
     p_detections = []
@@ -71,15 +74,15 @@ def get_trained_model(weights_path, num_classes=5):
 def main(dataset_path: str, weights_path: str):
 
     model = get_trained_model(weights_path)
-    # model.eval()
+    model.eval()
 
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
     img_path = os.path.join(dataset_path, os.listdir(dataset_path)[0])
     img = Image.open(img_path).convert("RGB")
-    img = [transforms.ToTensor(img)]
+    img = [[convert_tensor(img)]]
     torch.cuda.synchronize()
-    traced_model = torch.jit.trace(model, img)
+    traced_model = torch.jit.script(model, img)
 
     output_dir, weights_name_ext = os.path.split(weights_path)
     weights_name, _ = os.path.splitext(weights_name_ext)
