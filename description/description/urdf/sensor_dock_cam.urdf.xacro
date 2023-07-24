@@ -24,18 +24,18 @@
       <always_on>true</always_on>
       <update_rate>0.0001</update_rate>
       <camera>
-        <horizontal_fov>2.87507641955055</horizontal_fov>
+        <horizontal_fov>1.06251</horizontal_fov>
         <image>
           <width>320</width>
           <height>240</height>
-          <format>L8</format>
+          <format>R8G8B8</format>
         </image>
         <clip>
           <near>0.1</near>
           <far>20</far>
         </clip>
         <distortion>
-          <k1>1.0049199133284734</k1>
+          <k1>1.049199133284734</k1>
         </distortion>
       </camera>
       <plugin name="dock_cam_ros" filename="libgazebo_sensor_plugin_dock_cam.so">
