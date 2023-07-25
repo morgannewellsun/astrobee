@@ -25,10 +25,7 @@
 // IMU Sensor message
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/fill_image.h>
-#include <geometry_msgs/PoseStamped.h>
-#include <sensor_msgs/CameraInfo.h>
 #include <sensor_msgs/image_encodings.h>
-#include <std_msgs/String.h>
 
 // FSW includes
 #include <config_reader/config_reader.h>
