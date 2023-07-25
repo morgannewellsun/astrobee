@@ -24,7 +24,11 @@
 
 // IMU Sensor message
 #include <sensor_msgs/Image.h>
+#include <sensor_msgs/fill_image.h>
+#include <geometry_msgs/PoseStamped.h>
+#include <sensor_msgs/CameraInfo.h>
 #include <sensor_msgs/image_encodings.h>
+#include <std_msgs/String.h>
 
 // FSW includes
 #include <config_reader/config_reader.h>
@@ -60,8 +64,6 @@ class GazeboSensorPluginDockCam : public FreeFlyerSensorPlugin {
       return;
     }
 
-    // Check that we have a mono camera
-    // if (sensor_->Camera()->ImageFormat() != "L8") ROS_FATAL_STREAM("Camera format must be L8");
 
     // Set image constants
     msg_.is_bigendian = false;
@@ -116,16 +118,11 @@ class GazeboSensorPluginDockCam : public FreeFlyerSensorPlugin {
 
   // Called on each sensor update event
   void UpdateCallback() {
-    msg_.header.stamp.sec = sensor_->LastMeasurementTime().sec;
-    msg_.header.stamp.nsec = sensor_->LastMeasurementTime().nsec;
-    msg_.height = sensor_->ImageHeight();
-    msg_.width = sensor_->ImageWidth();
-    msg_.step = msg_.width;
-    msg_.data.resize(msg_.step * msg_.height);
-    std::copy(
-      reinterpret_cast<const uint8_t*>(sensor_->ImageData()),
-      reinterpret_cast<const uint8_t*>(sensor_->ImageData())
-        + msg_.step * msg_.height, msg_.data.begin());
+    ros::Time curr_time = ros::Time::now();
+    // Publish the nav cam image
+    msg_.header.stamp  = curr_time;
+    fillImage(msg_, sensor_msgs::image_encodings::RGB8, sensor_->ImageHeight(), sensor_->ImageWidth(),
+       3*sensor_->ImageWidth(), reinterpret_cast<const void*>(sensor_->ImageData()));
     pub_img_.publish(msg_);
   }
 
@@ -139,4 +136,4 @@ class GazeboSensorPluginDockCam : public FreeFlyerSensorPlugin {
 
 GZ_REGISTER_SENSOR_PLUGIN(GazeboSensorPluginDockCam)
 
-}   // namespace gazebo
+}  // namespace gazebo
